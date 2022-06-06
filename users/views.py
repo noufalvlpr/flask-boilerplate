@@ -1,10 +1,10 @@
-from werkzeug.exceptions import BadRequest
+from flask import jsonify
 
 from . import bp
 from .models import User
 
 
-@bp.route('/users', methods=['get', 'post'])
+@bp.get('/users')
 def users():
-    User.query.all()
-    raise BadRequest('Invalid user')
+    user_list = User.query.all()
+    return jsonify([item.to_dict() for item in user_list])
